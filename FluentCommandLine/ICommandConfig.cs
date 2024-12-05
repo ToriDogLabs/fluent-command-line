@@ -21,7 +21,7 @@ public interface ICommandConfig<TSettings>
 			Argument<TProperty> argument);
 
 	ICommandConfig<TSettings> Argument<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-			string name, string? description = null);
+			string name, string? description = null, bool hidden = false);
 
 	ICommandConfig<TSettings> Description(string description);
 
