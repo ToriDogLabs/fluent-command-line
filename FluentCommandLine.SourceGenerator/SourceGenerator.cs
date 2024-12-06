@@ -282,11 +282,11 @@ internal class SourceEmitter
 
 		string GetResult(IPropertySymbol property)
 		{
-			var (Id, Kind, Index) = valueProps.Find(vp => vp.Id == property.Name);
+			var (Id, Kind, Index, Required) = valueProps.Find(vp => vp.Id == property.Name);
 			var nullable = property.NullableAnnotation == NullableAnnotation.Annotated;
 			var type = $"{property.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}";
-			var useDefault = property.Type.IsReferenceType && !nullable;
-			return $"bindingContext.ParseResult.GetValueFor{Kind}(({Kind}<{type}{(nullable ? "?" : "")}>)ValueDescriptors[{Index}]){(useDefault ? $" ?? default({type})" : "")}";
+			var suffix = Required ? "!" : string.Empty;
+			return $"bindingContext.ParseResult.GetValueFor{Kind}(({Kind}<{type}{(nullable ? "?" : "")}>)ValueDescriptors[{Index}]){suffix}";
 		}
 
 		var constructor = string.Empty;
@@ -324,9 +324,10 @@ internal class SourceEmitter
 		return false;
 	}
 
-	private List<(string Id, string Kind, int Index)> FindValueDescriptors(ClassDeclarationSyntax @class, SemanticModel semanticModel)
+	private List<(string Id, string Kind, int Index, bool Required)> FindValueDescriptors(
+		ClassDeclarationSyntax @class, SemanticModel semanticModel)
 	{
-		List<(string Id, string Kind, int Index)> props = [];
+		List<(string Id, string Kind, int Index, bool Required)> props = [];
 		var symbol = semanticModel.GetSymbolInfo(@class);
 		var commandMethod = @class.Members.Where(m => m.IsKind(SyntaxKind.MethodDeclaration))
 			.OfType<MethodDeclarationSyntax>()
@@ -338,6 +339,7 @@ internal class SourceEmitter
 			{
 				if (argList.Parent is InvocationExpressionSyntax invocation)
 				{
+					var required = false;
 					string? kind = null;
 					var argDescendants = argList.DescendantNodes();
 					if (invocation.Expression is IdentifierNameSyntax identifier)
@@ -356,10 +358,20 @@ internal class SourceEmitter
 					}
 					if (kind != null)
 					{
+						if (kind == "Option")
+						{
+							var requiredParam = argList.Arguments.FirstOrDefault(arg => arg.NameColon?.Name.Identifier.Text == "required");
+							requiredParam ??= argList.Arguments.Where(arg => arg.NameColon == null).Skip(2).FirstOrDefault();
+							required = requiredParam?.Expression.IsKind(SyntaxKind.TrueLiteralExpression) ?? false;
+						}
+						else
+						{
+							required = true;
+						}
 						var propName = GetArgListPropName(argList);
 						if (propName != null)
 						{
-							props.Add((propName, kind, props.Count));
+							props.Add((propName, kind, props.Count, required));
 						}
 					}
 				}

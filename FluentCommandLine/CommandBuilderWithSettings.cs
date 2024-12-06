@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
 using System.CommandLine.Binding;
+using System.CommandLine.Parsing;
 using System.Linq.Expressions;
 
 namespace ToriDogLabs.FluentCommandLine;
@@ -26,45 +27,41 @@ internal class CommandBuilderWithSettings<TCommand, TSettings> :
 	}
 
 	public ICommandConfig<TSettings> Argument<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-		Argument<TProperty> argument)
+		string name, string? description, bool hidden,
+		ParseArgument<TProperty>? parse = null, Func<TProperty>? getDefaultValue = null, Action<Argument<TProperty>>? customize = null)
 	{
-		valueDescriptors.Add(argument);
-		return this;
-	}
-
-	public ICommandConfig<TSettings> Argument<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-		string name, string? description, bool hidden)
-	{
-		var arg = new Argument<TProperty>(name, description) { IsHidden = hidden };
+		var arg = parse == null ? new Argument<TProperty>(name) : new Argument<TProperty>(name, parse);
+		arg.Description = description;
+		arg.IsHidden = hidden;
+		if (getDefaultValue != null)
+		{
+			arg.SetDefaultValue(getDefaultValue);
+		}
+		customize?.Invoke(arg);
 		valueDescriptors.Add(arg);
 		return this;
 	}
 
 	public ICommandConfig<TSettings> Option<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-			Option<TProperty> option)
+			string name, string? description, bool required, bool hidden, Func<TProperty>? getDefaultValue,
+			ParseArgument<TProperty>? parse = null, Action<Option<TProperty>>? customize = null)
 	{
-		valueDescriptors.Add(option);
-		return this;
+		return Option(propertyExpression, [name], description, required, hidden, getDefaultValue, parse, customize);
 	}
 
 	public ICommandConfig<TSettings> Option<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-			string name, string? description, bool required, bool hidden, Func<TProperty>? getDefaultValue)
+			string[] aliases, string? description, bool required, bool hidden, Func<TProperty>? getDefaultValue,
+			ParseArgument<TProperty>? parse = null, Action<Option<TProperty>>? customize = null)
 	{
-		return Option(propertyExpression, [name], description, required, hidden, getDefaultValue);
-	}
-
-	public ICommandConfig<TSettings> Option<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
-			string[] aliases, string? description, bool required, bool hidden, Func<TProperty>? getDefaultValue)
-	{
-		var option = new Option<TProperty>(aliases, description)
-		{
-			IsRequired = required,
-			IsHidden = hidden,
-		};
+		var option = parse == null ? new Option<TProperty>(aliases) : new Option<TProperty>(aliases, parse);
+		option.Description = description;
+		option.IsRequired = required;
+		option.IsHidden = hidden;
 		if (getDefaultValue != null)
 		{
 			option.SetDefaultValueFactory(() => getDefaultValue());
 		}
+		customize?.Invoke(option);
 		valueDescriptors.Add(option);
 		return this;
 	}
