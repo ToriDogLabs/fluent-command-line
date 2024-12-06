@@ -17,7 +17,7 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v\//}" >> $GITHUB_ENV
     - name: Build
       run: |
-        dotnet build --configuration Release /p:Version=${VERSION} FluentCommandLine.SourceGenerator/FluentCommandLine.SourceGenerator.csproj
+        dotnet build --configuration Release /p:Version=${VERSION} FluentCommandLine.SourceGenerator/ToriDogLabs.FluentCommandLine.SourceGenerator.csproj
         dotnet build --configuration Release /p:Version=${VERSION} FluentCommandLine/ToriDogLabs.FluentCommandLine.csproj
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output . FluentCommandLine/ToriDogLabs.FluentCommandLine.csproj
