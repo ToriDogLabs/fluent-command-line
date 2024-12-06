@@ -1,3 +1,5 @@
+[![NuGet Version](https://img.shields.io/nuget/v/ToriDogLabs.FluentCommandLine)](https://www.nuget.org/packages/ToriDogLabs.FluentCommandLine/)
+
 # FluentCommandLine
 
 Simplify using System.CommandLine setup using a fluent interface and simple interfaces. This library uses a source generator instead of reflection to simplify the use of System.CommandLine. By not using reflection your app can still be [trim-friendly](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) allowing a fast, lightweight, AOT-capable CLI app.
