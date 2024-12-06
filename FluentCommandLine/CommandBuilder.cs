@@ -10,14 +10,14 @@ internal class CommandBuilder<TCommand> : AbstractCommandBuilder<ICommandConfig,
 	private readonly Func<TCommand, int>? execute;
 	private readonly Func<TCommand, CancellationToken, Task<int>>? executeAsync;
 
-	public CommandBuilder(Func<TCommand, int> execute)
+	public CommandBuilder(Func<TCommand, int>? execute)
 	{
 		this.execute = execute;
 	}
 
-	public CommandBuilder(Func<TCommand, CancellationToken, Task<int>> executeAsync)
+	public CommandBuilder(Func<TCommand, CancellationToken, Task<int>>? execute)
 	{
-		this.executeAsync = executeAsync;
+		executeAsync = execute;
 	}
 
 	protected override void ConfigureCommand(Command command, IServiceProvider serviceProvider)

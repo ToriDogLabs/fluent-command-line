@@ -54,6 +54,24 @@ public class FluentCommandLineGenerator : IIncrementalGenerator
 
 internal static class Helpers
 {
+	public static IEnumerable<ISymbol> GetAllMembers(this ITypeSymbol? typeSymbol)
+	{
+		var members = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
+
+		while (typeSymbol != null)
+		{
+			foreach (var member in typeSymbol.GetMembers())
+			{
+				if (members.Add(member)) // Avoid duplicates
+				{
+					yield return member;
+				}
+			}
+
+			typeSymbol = typeSymbol.BaseType; // Traverse base types
+		}
+	}
+
 	public static string GetFullyQualifiedName(this ClassDeclarationSyntax classDeclaration)
 	{
 		// Get the class name
@@ -167,7 +185,7 @@ internal class SourceEmitter
 			var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
 			var interfaces = semanticModel.GetInterfaces(@class);
 			string? addMethod = null;
-			var args = "";
+			List<string> args = [];
 			var typeArgs = "";
 			INamedTypeSymbol? settingsNamedTypeSymbol = null;
 			if (FindInterface(interfaces, typeof(FluentCommandLine.ICommandAsync).FullName, out var _) ||
@@ -211,12 +229,19 @@ internal class SourceEmitter
 
 			if (interfaces.Any(i => i.ToDisplayString() == typeof(FluentCommandLine.Markers.IBaseRootCommand).FullName))
 			{
-				args = "true";
+				args.Add("rootCommand: true");
 			}
 
 			if (addMethod != null)
 			{
-				method.AddStatement($"services.{addMethod}<{@class.GetFullyQualifiedName()}{typeArgs}>({args});");
+				var classSymbol = semanticModel.GetDeclaredSymbol(@class);
+				var members = classSymbol.GetAllMembers().ToList();
+				var executeMethod = classSymbol.GetAllMembers().OfType<IMethodSymbol>().FirstOrDefault(m => m.Name == "Execute");
+				if (executeMethod == null)
+				{
+					args.Add("addHandler: false");
+				}
+				method.AddStatement($"services.{addMethod}<{@class.GetFullyQualifiedName()}{typeArgs}>({string.Join(", ", args)});");
 			}
 		}
 		return (source.Build(), bindersSource.Build());

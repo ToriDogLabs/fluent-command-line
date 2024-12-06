@@ -17,11 +17,6 @@ public class RootCommand : IRootCommand
 			.Description("Sample app for FluentCommand")
 			.AddCommand<ReadCommand>();
 	}
-
-	public int Execute()
-	{
-		return 0;
-	}
 }
 ```
 

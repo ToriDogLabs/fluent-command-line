@@ -15,14 +15,14 @@ internal class CommandBuilderWithSettings<TCommand, TSettings> :
 	private readonly Func<TCommand, TSettings, CancellationToken, Task<int>>? executeAsync;
 	private readonly List<IValueDescriptor> valueDescriptors = [];
 
-	public CommandBuilderWithSettings(Func<TCommand, TSettings, int> execute)
+	public CommandBuilderWithSettings(Func<TCommand, TSettings, int>? execute = null)
 	{
 		this.execute = execute;
 	}
 
-	public CommandBuilderWithSettings(Func<TCommand, TSettings, CancellationToken, Task<int>> executeAsync)
+	public CommandBuilderWithSettings(Func<TCommand, TSettings, CancellationToken, Task<int>>? execute = null)
 	{
-		this.executeAsync = executeAsync;
+		executeAsync = execute;
 	}
 
 	public ICommandConfig<TSettings> Argument<TProperty>(Expression<Func<TSettings, TProperty>> propertyExpression,
