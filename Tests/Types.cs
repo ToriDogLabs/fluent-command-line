@@ -18,6 +18,8 @@ public class Types
 	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.IRootCommand), typeof(Lib::ToriDogLabs.FluentCommandLine.IRootCommand))]
 	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.ICommandAsync), typeof(Lib::ToriDogLabs.FluentCommandLine.ICommandAsync))]
 	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.IRootCommandAsync), typeof(Lib::ToriDogLabs.FluentCommandLine.IRootCommandAsync))]
+	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.ICommandGroup), typeof(Lib::ToriDogLabs.FluentCommandLine.ICommandGroup))]
+	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.IRootCommandGroup), typeof(Lib::ToriDogLabs.FluentCommandLine.IRootCommandGroup))]
 	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.Markers.IBaseCommand), typeof(Lib::ToriDogLabs.FluentCommandLine.Markers.IBaseCommand))]
 	[InlineData(typeof(SourceGen::ToriDogLabs.FluentCommandLine.Markers.IBaseRootCommand), typeof(Lib::ToriDogLabs.FluentCommandLine.Markers.IBaseRootCommand))]
 	public void TypesAreInSync(Type a, Type b)

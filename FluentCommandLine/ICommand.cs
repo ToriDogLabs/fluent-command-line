@@ -4,34 +4,26 @@ namespace ToriDogLabs.FluentCommandLine;
 
 public interface ICommand : IConfigurableCommand
 {
-	int Execute()
-	{
-		throw new NotImplementedException();
-	}
+	int Execute();
 }
 
 public interface ICommand<TSettings> : IConfigurableCommand<TSettings>
 {
-	int Execute(TSettings settings)
-	{
-		throw new NotImplementedException();
-	}
+	int Execute(TSettings settings);
 }
 
 public interface ICommandAsync : IConfigurableCommand
 {
-	Task<int> Execute(CancellationToken cancellationToken)
-	{
-		throw new NotImplementedException();
-	}
+	Task<int> Execute(CancellationToken cancellationToken);
 }
 
 public interface ICommandAsync<TSettings> : IConfigurableCommand<TSettings>
 {
-	Task<int> Execute(TSettings settings, CancellationToken cancellationToken)
-	{
-		throw new NotImplementedException();
-	}
+	Task<int> Execute(TSettings settings, CancellationToken cancellationToken);
+}
+
+public interface ICommandGroup : IConfigurableCommand
+{
 }
 
 public interface IConfigurableCommand : IBaseCommand
@@ -53,6 +45,10 @@ public interface IRootCommand<TSettings> : ICommand<TSettings>, IBaseRootCommand
 }
 
 public interface IRootCommandAsync : ICommandAsync, IBaseRootCommand
+{
+}
+
+public interface IRootCommandGroup : ICommandGroup, IBaseRootCommand
 {
 }
 

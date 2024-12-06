@@ -9,7 +9,7 @@ Simplify using System.CommandLine setup using a fluent interface and simple inte
 First you must start with a root command that imlements IRootCommand or IRootCommandAsync. In the configure method you can set up options, arguments, descriptions, etc.
 
 ```cs
-public class RootCommand : IRootCommand
+public class RootCommand : IRootCommandGroup
 {
 	public static void Configure(ICommandConfig config)
 	{
@@ -20,7 +20,7 @@ public class RootCommand : IRootCommand
 }
 ```
 
-Sub commands just implement ICommand or ICommandAsync
+Sub commands just implement ICommand, ICommandAsync, or ICommandGroup
 
 ```cs
 public record ReadCommandArgs(FileInfo FileInfo, int Delay, ConsoleColor ForegroundColor, bool LightMode);
@@ -63,6 +63,10 @@ public class ReadCommand(IConsole console) : ICommandAsync<ReadCommandArgs>
 	}
 }
 ```
+
+## Command Groups
+
+`ICommandGroup` and `IRootCommandGroup` are commands that don't do anything themselves so do not have an `Execute` method, but are used to group other subcommands.
 
 ## Running
 

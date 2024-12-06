@@ -218,6 +218,11 @@ internal class SourceEmitter
 				addMethod = "AddCommandWithSettings";
 				settingsNamedTypeSymbol = rootSettingsInterface;
 			}
+			else if (FindInterface(interfaces, typeof(FluentCommandLine.ICommandGroup).FullName, out var _) ||
+				FindInterface(interfaces, typeof(FluentCommandLine.IRootCommandGroup).FullName, out var _))
+			{
+				addMethod = "AddCommandGroup";
+			}
 
 			if (settingsNamedTypeSymbol != null)
 			{
@@ -234,13 +239,6 @@ internal class SourceEmitter
 
 			if (addMethod != null)
 			{
-				var classSymbol = semanticModel.GetDeclaredSymbol(@class);
-				var members = classSymbol.GetAllMembers().ToList();
-				var executeMethod = classSymbol.GetAllMembers().OfType<IMethodSymbol>().FirstOrDefault(m => m.Name == "Execute");
-				if (executeMethod == null)
-				{
-					args.Add("addHandler: false");
-				}
 				method.AddStatement($"services.{addMethod}<{@class.GetFullyQualifiedName()}{typeArgs}>({string.Join(", ", args)});");
 			}
 		}

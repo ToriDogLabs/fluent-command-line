@@ -48,7 +48,7 @@ public class ReadCommand(IConsole console) : ICommandAsync<ReadCommandArgs>
 	}
 }
 
-public class RootCommand : IRootCommand
+public class RootCommand : IRootCommandGroup
 {
 	public static void Configure(ICommandConfig config)
 	{

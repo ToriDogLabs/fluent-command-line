@@ -10,7 +10,7 @@ internal class CommandBuilder<TCommand> : AbstractCommandBuilder<ICommandConfig,
 	private readonly Func<TCommand, int>? execute;
 	private readonly Func<TCommand, CancellationToken, Task<int>>? executeAsync;
 
-	public CommandBuilder(Func<TCommand, int>? execute)
+	public CommandBuilder(Func<TCommand, int>? execute = null)
 	{
 		this.execute = execute;
 	}

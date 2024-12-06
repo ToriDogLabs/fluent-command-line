@@ -24,6 +24,9 @@ namespace ToriDogLabs.FluentCommandLine
 		Task<int> Execute(TSettings settings, CancellationToken cancellationToken);
 	}
 
+	public interface ICommandGroup : IConfigurableCommand
+	{ }
+
 	public interface IConfigurableCommand : IBaseCommand
 	{
 		void Configure(ICommandConfig command);
@@ -52,6 +55,10 @@ namespace ToriDogLabs.FluentCommandLine
 	public interface IRootCommandAsync<TSettings> : IRootConfigurableCommand<TSettings>
 	{
 		Task<int> Execute(TSettings settings, CancellationToken cancellationToken);
+	}
+
+	public interface IRootCommandGroup : ICommandGroup
+	{
 	}
 
 	public interface IRootConfigurableCommand : IBaseRootCommand
