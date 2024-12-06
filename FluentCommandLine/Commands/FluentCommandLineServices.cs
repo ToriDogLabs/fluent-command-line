@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentCommandLine.Commands;
+namespace ToriDogLabs.FluentCommandLine.Commands;
 
 public static class FluentCommandLineServices
 {

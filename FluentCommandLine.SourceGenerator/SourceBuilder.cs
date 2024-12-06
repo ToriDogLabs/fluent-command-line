@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace FluentCommandLine.SourceGenerator;
+namespace ToriDogLabs.FluentCommandLine.SourceGenerator;
 
 public enum Access
 {

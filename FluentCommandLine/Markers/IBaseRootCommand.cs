@@ -1,3 +1,4 @@
-﻿namespace FluentCommandLine.Markers;
+﻿namespace ToriDogLabs.FluentCommandLine.Markers;
 
-public interface IBaseRootCommand { }
+public interface IBaseRootCommand
+{ }

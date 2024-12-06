@@ -16,10 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FluentCommandLine.SourceGenerator\FluentCommandLine.SourceGenerator.csproj">
+    <ProjectReference Include="..\FluentCommandLine.SourceGenerator\ToriDogLabs.FluentCommandLine.SourceGenerator.csproj">
       <Aliases>SourceGen</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\FluentCommandLine\FluentCommandLine.csproj">
+    <ProjectReference Include="..\FluentCommandLine\ToriDogLabs.FluentCommandLine.csproj">
       <Aliases>Lib</Aliases>
     </ProjectReference>
   </ItemGroup>

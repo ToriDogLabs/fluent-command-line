@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using FluentCommandLine;
 using System.CommandLine;
+using ToriDogLabs.FluentCommandLine;
 
 return await FluentCommandHost.Run(args);
 

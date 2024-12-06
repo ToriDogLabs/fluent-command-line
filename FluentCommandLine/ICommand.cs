@@ -1,6 +1,6 @@
-﻿using FluentCommandLine.Markers;
+﻿using ToriDogLabs.FluentCommandLine.Markers;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 public interface ICommand : IConfigurableCommand
 {

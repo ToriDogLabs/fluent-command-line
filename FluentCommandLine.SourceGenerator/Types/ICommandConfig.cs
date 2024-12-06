@@ -1,4 +1,4 @@
-﻿namespace FluentCommandLine;
+﻿namespace ToriDogLabs.FluentCommandLine;
 
 public interface ICommandConfig
 {

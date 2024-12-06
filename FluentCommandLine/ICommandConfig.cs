@@ -1,8 +1,8 @@
-﻿using FluentCommandLine.Markers;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.Linq.Expressions;
+using ToriDogLabs.FluentCommandLine.Markers;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 public interface ICommandConfig
 {

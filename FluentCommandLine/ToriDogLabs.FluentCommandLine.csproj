@@ -4,6 +4,18 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <Authors>Brent Smith</Authors>
+	  <Company>Smithgeek LLC</Company>
+	  <Product>ToriDogLabs.FluentCommandLine</Product>
+	  <PackageId>ToriDogLabs.FluentCommandLine</PackageId>
+	  <AssemblyName>ToriDogLabs.FluentCommandLine</AssemblyName>
+	  <RootNamespace>ToriDogLabs.FluentCommandLine</RootNamespace>
+	  <PackageIcon>toridoglabs.jpg</PackageIcon>
+	  <PackageIconUrl />
+	  <RepositoryUrl>https://github.com/ToriDogLabs/fluent-command-line</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <Description>Simplify using System.CommandLine setup using a fluent interface and simple interfaces.</Description>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +24,13 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\toridoglabs.jpg">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="$(ProjectDir)..\FluentCommandLine.SourceGenerator\bin\$(Configuration)\netstandard2.0\FluentCommandLine.SourceGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />

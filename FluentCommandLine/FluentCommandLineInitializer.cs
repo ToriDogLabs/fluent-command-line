@@ -6,7 +6,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 public static class FluentCommandLineInitializer
 {

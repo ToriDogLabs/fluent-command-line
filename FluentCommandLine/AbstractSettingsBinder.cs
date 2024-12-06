@@ -1,6 +1,6 @@
 ﻿using System.CommandLine.Binding;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 public abstract class AbstractSettingsBinder<TSettings> : BinderBase<TSettings>
 {

@@ -1,6 +1,6 @@
 ﻿using System.CommandLine.Invocation;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 internal class InvocationContextProvider
 {

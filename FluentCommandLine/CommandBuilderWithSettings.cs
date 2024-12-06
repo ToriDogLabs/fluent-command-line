@@ -3,7 +3,7 @@ using System.CommandLine;
 using System.CommandLine.Binding;
 using System.Linq.Expressions;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 internal class CommandBuilderWithSettings<TCommand, TSettings> :
 	AbstractCommandBuilder<ICommandConfig<TSettings>, TCommand>,

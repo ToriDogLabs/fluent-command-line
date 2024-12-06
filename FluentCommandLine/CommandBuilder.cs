@@ -2,7 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Binding;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 internal class CommandBuilder<TCommand> : AbstractCommandBuilder<ICommandConfig, TCommand>, ICommandConfig
 	where TCommand : notnull

@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FluentCommandLine.SourceGenerator\FluentCommandLine.SourceGenerator.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\FluentCommandLine\FluentCommandLine.csproj" />
+    <ProjectReference Include="..\FluentCommandLine.SourceGenerator\ToriDogLabs.FluentCommandLine.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\FluentCommandLine\ToriDogLabs.FluentCommandLine.csproj" />
   </ItemGroup>
 
 </Project>

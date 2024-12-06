@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace FluentCommandLine.SourceGenerator;
+namespace ToriDogLabs.FluentCommandLine.SourceGenerator;
 
 [Generator(LanguageNames.CSharp)]
 public class FluentCommandLineGenerator : IIncrementalGenerator
@@ -38,7 +38,7 @@ public class FluentCommandLineGenerator : IIncrementalGenerator
 	{
 		if (context.Node is ClassDeclarationSyntax classDeclarationSyntax)
 		{
-			if (context.SemanticModel.ImplementsInterface(classDeclarationSyntax, typeof(FluentCommandLine.Markers.IBaseCommand).FullName))
+			if (context.SemanticModel.ImplementsInterface(classDeclarationSyntax, typeof(ToriDogLabs.FluentCommandLine.Markers.IBaseCommand).FullName))
 			{
 				return classDeclarationSyntax;
 			}
@@ -141,15 +141,15 @@ internal class SourceEmitter
 		var bindersSource = new SourceBuilder()
 			.AddDirective("#nullable enable")
 			.AddUsing("System.CommandLine");
-		var binderNamespace = $"FluentCommandLine.Generated.{compilation.AssemblyName ?? string.Empty}";
+		var binderNamespace = $"ToriDogLabs.FluentCommandLine.Generated.{compilation.AssemblyName ?? string.Empty}";
 		var bindersNamespace = bindersSource.AddNamespace(binderNamespace);
 		var source = new SourceBuilder()
 			.AddDirective("#nullable enable")
 			.AddUsing("Microsoft.Extensions.DependencyInjection")
-			.AddUsing("FluentCommandLine")
-			.AddUsing("FluentCommandLine.Commands")
+			.AddUsing("ToriDogLabs.FluentCommandLine")
+			.AddUsing("ToriDogLabs.FluentCommandLine.Commands")
 			.AddUsing("System.CommandLine.Builder");
-		var @namespace = source.AddNamespace("FluentCommandLine");
+		var @namespace = source.AddNamespace("ToriDogLabs.FluentCommandLine");
 		var extClass = @namespace.AddClass("FluentCommandLineExtensions", Access.Public, isStatic: true);
 		var method = extClass.AddMethod(new("AddCommands", access: Access.Public, isStatic: true))
 			.AddParameter("this IServiceCollection services");
@@ -259,8 +259,9 @@ internal class SourceEmitter
 		{
 			var (Id, Kind, Index) = valueProps.Find(vp => vp.Id == property.Name);
 			var nullable = property.NullableAnnotation == NullableAnnotation.Annotated;
-			var type = $"{property.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}{(nullable ? "?" : "")}";
-			return $"bindingContext.ParseResult.GetValueFor{Kind}(({Kind}<{type}>)ValueDescriptors[{Index}])";
+			var type = $"{property.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}";
+			var useDefault = property.Type.IsReferenceType && !nullable;
+			return $"bindingContext.ParseResult.GetValueFor{Kind}(({Kind}<{type}{(nullable ? "?" : "")}>)ValueDescriptors[{Index}]){(useDefault ? $" ?? default({type})" : "")}";
 		}
 
 		var constructor = string.Empty;
@@ -273,7 +274,7 @@ internal class SourceEmitter
 			var scope = method.AddScope($"return new {settingsTypeFullName}{constructor}", ";");
 			foreach (var property in initializerProperties)
 			{
-				scope.AddStatement($"{property.Name} = {GetResult(property)},");
+				scope.AddStatement($"{property.Name} = {GetResult(property)}, ");
 			}
 		}
 		else

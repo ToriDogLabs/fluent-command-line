@@ -1,8 +1,8 @@
-﻿using FluentCommandLine.Markers;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using ToriDogLabs.FluentCommandLine.Markers;
 
-namespace FluentCommandLine
+namespace ToriDogLabs.FluentCommandLine
 {
 	public interface ICommand : IConfigurableCommand
 	{

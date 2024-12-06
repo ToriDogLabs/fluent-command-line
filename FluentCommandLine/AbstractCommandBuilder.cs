@@ -1,9 +1,9 @@
-﻿using FluentCommandLine.Markers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
 using System.CommandLine.Binding;
+using ToriDogLabs.FluentCommandLine.Markers;
 
-namespace FluentCommandLine;
+namespace ToriDogLabs.FluentCommandLine;
 
 internal interface ICommandBuilder
 {
