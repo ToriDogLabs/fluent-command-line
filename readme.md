@@ -74,7 +74,7 @@ public class ReadCommand(IConsole console) : ICommandAsync<ReadCommandArgs>
 You can run your console app with this `Program.cs`
 
 ```cs
-using FluentCommandLine;
+using ToriDogLabs.FluentCommandLine;
 
 return await FluentCommandHost.Run(args);
 ```
@@ -82,7 +82,7 @@ return await FluentCommandHost.Run(args);
 If you need to configure some services for dependency injection you can use this overload
 
 ```cs
-using FluentCommandLine;
+using ToriDogLabs.FluentCommandLine;
 
 return await FluentCommandHost.Run(args, services =>
 {
@@ -93,7 +93,7 @@ return await FluentCommandHost.Run(args, services =>
 If you need more control over the app you can use something like this
 
 ```cs
-using FluentCommandLine;
+using ToriDogLabs.FluentCommandLine;
 
 var builder = Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder();
 builder.Services.AddFluentCommandLineServices();
