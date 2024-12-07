@@ -10,6 +10,11 @@ return await FluentCommandHost.Run(args);
 //var app = builder.Build();
 //return await app.RunFluentCommandLine(args);
 
+public class ArgsWithUnusedProp
+{
+	public string? Value { get; set; }
+}
+
 public class ReadCommand(IConsole console) : ICommandAsync<ReadCommandArgs>
 {
 	public static void Configure(ICommandConfig<ReadCommandArgs> config)
@@ -54,8 +59,21 @@ public class RootCommand : IRootCommandGroup
 	{
 		config
 			.Description("Sample app for FluentCommand")
-			.AddCommand<ReadCommand>();
+			.AddCommand<ReadCommand>()
+			.AddCommand<TestCommand>();
 	}
 }
 
 public record ReadCommandArgs(FileInfo FileInfo, int Delay, ConsoleColor ForegroundColor, bool LightMode);
+
+public class TestCommand : ICommand<ArgsWithUnusedProp>
+{
+	public static void Configure(ICommandConfig<ArgsWithUnusedProp> config)
+	{
+	}
+
+	public int Execute(ArgsWithUnusedProp settings)
+	{
+		return 0;
+	}
+}

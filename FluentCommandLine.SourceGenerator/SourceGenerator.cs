@@ -264,7 +264,7 @@ internal class SourceEmitter
 		List<IPropertySymbol> initializerProperties = [];
 		foreach (var property in properties.OfType<IPropertySymbol>())
 		{
-			if (property.IsImplicitlyDeclared)
+			if (property.IsImplicitlyDeclared || valueProps.All(vp => vp.Id != property.Name))
 			{
 				continue;
 			}
@@ -287,11 +287,7 @@ internal class SourceEmitter
 			return $"bindingContext.ParseResult.GetValueFor{Kind}(({Kind}<{type}{(nullable ? "?" : "")}>)ValueDescriptors[{Index}]){suffix}";
 		}
 
-		var constructor = string.Empty;
-		if (constructorParams.Any())
-		{
-			constructor = $"({string.Join(",", constructorParams.OrderBy(p => p.Index).Select(p => GetResult(p.Property)))})";
-		}
+		var constructor = $"({string.Join(",", constructorParams.OrderBy(p => p.Index).Select(p => GetResult(p.Property)))})";
 		if (initializerProperties.Any())
 		{
 			var scope = method.AddScope($"return new {settingsTypeFullName}{constructor}", ";");
